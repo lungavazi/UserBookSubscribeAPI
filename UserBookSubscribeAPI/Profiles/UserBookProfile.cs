@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using UserBookSubscribeAPI.Models.DTO;
 
 namespace UserBookSubscribeAPI.Profiles
 {
@@ -6,11 +7,11 @@ namespace UserBookSubscribeAPI.Profiles
     {
         public UserBookProfile()
         {
-            CreateMap<Entities.Book,Entities.DTO.BookDTO >().ReverseMap();
-            CreateMap<Entities.Book,Entities.DTO.BookAddDTO >().ReverseMap();
-            CreateMap<Entities.User,Entities.DTO.UserDTO>().ReverseMap();
-            CreateMap<Entities.User,Entities.DTO.UserAddDTO>().ReverseMap();
-            CreateMap<Entities.Subscribe,Entities.DTO.SubscribeDTO>().ReverseMap();
+            CreateMap<Entities.Book,BookDTO >().ReverseMap();
+            CreateMap<Entities.Book,BookAddDTO >().ReverseMap();
+            CreateMap<Entities.User,UserDTO>().ReverseMap();
+            CreateMap<Entities.User,UserAddDTO>().ReverseMap();
+            CreateMap<Entities.Subscribe,SubscribeDTO>().ReverseMap();
         }
     }
 }

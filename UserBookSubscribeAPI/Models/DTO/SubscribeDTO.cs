@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace UserBookSubscribeAPI.Entities.DTO
+﻿
+namespace UserBookSubscribeAPI.Models.DTO
 {
     public class SubscribeDTO
     {

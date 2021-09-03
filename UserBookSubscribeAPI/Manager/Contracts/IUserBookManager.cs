@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using UserBookSubscribeAPI.Entities.DTO;
+using UserBookSubscribeAPI.Models.DTO;
 
 namespace UserBookSubscribeAPI.Manager
 {
@@ -14,5 +14,7 @@ namespace UserBookSubscribeAPI.Manager
         public void Subscribe(int userID, int bookID, out string resultsMsg);
         public void Unsubscribe(int userID, int bookID, out string resultsMsg);
         public UserDTO AuthenticateUser(string userName, string password);
+        public List<BookSubscriptionsDTO> BookSubscriptions();
+        public List<UserSubscriptionsDTO> UserSubscriptions();
     }
 }

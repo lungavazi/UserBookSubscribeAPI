@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 using UserBookSubscribeAPI.Context;
 using UserBookSubscribeAPI.Entities;
-using UserBookSubscribeAPI.Entities.DTO;
 using UserBookSubscribeAPI.Service.Contracts;
 
 namespace UserBookSubscribeAPI.Service.Repository
@@ -41,5 +38,9 @@ namespace UserBookSubscribeAPI.Service.Repository
             _userBookSubscribeContext.SaveChanges();
         }
 
+        public IQueryable<Subscribe> GetAll()
+        {
+            return _userBookSubscribeContext.Subscribe.AsQueryable();
+        }
     }
 }

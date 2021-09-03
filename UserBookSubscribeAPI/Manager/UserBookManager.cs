@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -8,9 +6,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using UserBookSubscribeAPI.Entities;
-using UserBookSubscribeAPI.Entities.DTO;
+using UserBookSubscribeAPI.Models.DTO;
 using UserBookSubscribeAPI.Service.Contracts;
 
 namespace UserBookSubscribeAPI.Manager
@@ -120,6 +117,19 @@ namespace UserBookSubscribeAPI.Manager
             else { return new UserDTO(); }
         }
 
+        public List<BookSubscriptionsDTO> BookSubscriptions()
+        {
+            var subscriptionEntityList = _subscribeRepository.GetAll();
+            var bookEntityList = _bookRepository.FindAll();
+
+            var bookList = from a in subscriptionEntityList
+                           join b in bookEntityList on a.BookID equals b.BookId
+                           group b by b.Name into g
+                           select new BookSubscriptionsDTO() { BookName = g.Key, NumberOfSubscriptions = g.Count() };
+
+            return bookList.ToList();
+        }
+
         private string GenerateToken(string username)
         {
             var token = new JwtSecurityToken(
@@ -132,6 +142,19 @@ namespace UserBookSubscribeAPI.Manager
                 signingCredentials: new SigningCredentials(SIGNING_KEY, SecurityAlgorithms.HmacSha256)
                 );
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public List<UserSubscriptionsDTO> UserSubscriptions()
+        {
+            var subscriptionEntityList = _subscribeRepository.GetAll();
+            var userEntityList = _userRepository.FindAll();
+
+            var bookList = from a in subscriptionEntityList
+                           join b in userEntityList on a.UserID equals b.UserId
+                           group b by b.FirstName into g
+                           select new UserSubscriptionsDTO() { Name = g.Key, NumberOfSubscriptions = g.Count() };
+
+            return bookList.ToList();
         }
     }
 }

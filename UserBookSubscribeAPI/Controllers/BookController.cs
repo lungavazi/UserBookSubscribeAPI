@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using UserBookSubscribeAPI.Entities.DTO;
+using UserBookSubscribeAPI.Models.DTO;
 using UserBookSubscribeAPI.Manager;
 
 namespace UserBookSubscribeAPI.Controllers

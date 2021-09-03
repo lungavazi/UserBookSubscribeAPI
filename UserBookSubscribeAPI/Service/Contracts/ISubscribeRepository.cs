@@ -10,6 +10,7 @@ namespace UserBookSubscribeAPI.Service.Contracts
         void Subscribe(Subscribe  subscribe);
         void Unsubscribe(Subscribe subscribe);
         IQueryable<Subscribe> FindByCondition(Expression<Func<Subscribe, bool>> expression);
+        IQueryable<Subscribe> GetAll();
         void Save();
     }
 }
