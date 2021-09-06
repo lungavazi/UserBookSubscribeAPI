@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserBookSubscribeAPI.Entities
@@ -11,5 +12,6 @@ namespace UserBookSubscribeAPI.Entities
         public string Name { get; set; }
         public string Text { get; set; }
         public double PurchasePrice { get; set; }
+        public List<Subscribe> Subscriptions {get;} = new List<Subscribe>();
     }
 }
