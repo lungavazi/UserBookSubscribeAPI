@@ -35,7 +35,7 @@ namespace UserBookSubscribeAPI.Manager
                 return _mapper.Map<List<UserDTO>>(results);
         }
 
-        public UserDTO GetUserById(int userId)
+        public UserDTO GetUserById(long userId)
         {
             var results = _userRepository.FindByCondition(c => c.UserId == userId).FirstOrDefault();
             return _mapper.Map<UserDTO>(results);
@@ -48,10 +48,10 @@ namespace UserBookSubscribeAPI.Manager
                 return _mapper.Map<List<BookDTO>>(results);
         }
 
-        public BookDTO GetBookById(int bookId)
+        public BookDTO GetBookById(long bookId)
         {
             var bookEntity = _bookRepository.FindByCondition(c => c.BookId == bookId).FirstOrDefault();
-            int numberOfSubscriptions = _subscribeRepository.FindByCondition(c => c.BookID == bookId).Count();
+            int numberOfSubscriptions = _subscribeRepository.FindByCondition(c => c.BookId == bookId).Count();
             var bookDTO = _mapper.Map<BookDTO>(bookEntity);
             bookDTO.NumberOfSubscriptions = numberOfSubscriptions;
 
@@ -72,9 +72,9 @@ namespace UserBookSubscribeAPI.Manager
             _userRepository.Save();
         }
 
-        public void Subscribe(int userId, int bookId, out string responseMsg)
+        public void Subscribe(long userId, long bookId, out string responseMsg)
         {
-            if (_subscribeRepository.FindByCondition(c => c.UserID == userId && c.BookID == bookId).FirstOrDefault() != null){
+            if (_subscribeRepository.FindByCondition(c => c.UserId == userId && c.BookId == bookId).FirstOrDefault() != null){
                 responseMsg = "Subscription already exists";
             }
             else if (_userRepository.FindByCondition(d => d.UserId == userId).FirstOrDefault() != null && _bookRepository.FindByCondition(c => c.BookId == bookId).FirstOrDefault() != null)
@@ -88,9 +88,9 @@ namespace UserBookSubscribeAPI.Manager
             else { responseMsg = "Either the User or the Book Id does not exist."; }            
         }
 
-        public void Unsubscribe(int userId, int bookId, out string responseMsg)
+        public void Unsubscribe(long userId, long bookId, out string responseMsg)
         {
-            var subscribeEntity = _subscribeRepository.FindByCondition(c => c.UserID == userId && c.BookID == bookId).FirstOrDefault();
+            var subscribeEntity = _subscribeRepository.FindByCondition(c => c.UserId == userId && c.BookId == bookId).FirstOrDefault();
 
             if (subscribeEntity != null)
             {                
@@ -123,7 +123,7 @@ namespace UserBookSubscribeAPI.Manager
             var bookEntityList = _bookRepository.FindAll();
 
             var bookList = from a in subscriptionEntityList
-                           join b in bookEntityList on a.BookID equals b.BookId
+                           join b in bookEntityList on a.BookId equals b.BookId
                            group b by b.Name into g
                            select new BookSubscriptionsDTO() { BookName = g.Key, NumberOfSubscriptions = g.Count() };
 
@@ -150,7 +150,7 @@ namespace UserBookSubscribeAPI.Manager
             var userEntityList = _userRepository.FindAll();
 
             var bookList = from a in subscriptionEntityList
-                           join b in userEntityList on a.UserID equals b.UserId
+                           join b in userEntityList on a.UserId equals b.UserId
                            group b by b.FirstName into g
                            select new UserSubscriptionsDTO() { Name = g.Key, NumberOfSubscriptions = g.Count() };
 

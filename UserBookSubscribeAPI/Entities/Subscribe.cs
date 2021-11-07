@@ -10,9 +10,9 @@ namespace UserBookSubscribeAPI.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-        public int UserID { get; set; }
-        public int BookID { get; set; }
+        public long Id { get; set; }
+        public long UserId { get; set; }
+        public long BookId { get; set; }
         public DateTime SubscribedDate { get; set; } = DateTime.Now;
     }
 }

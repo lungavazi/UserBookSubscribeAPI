@@ -31,10 +31,10 @@ namespace UserBookSubscribeAPI
 
             services.AddDbContext<UserBookSubscribeContext>(o => { o.UseSqlServer(connectionString); });
             services.AddMvc();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<ISubscribeRepository, SubscribeRepository>();
-            services.AddScoped<IUserBookManager, UserBookManager>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<ISubscribeRepository, SubscribeRepository>();
+            services.AddTransient<IUserBookManager, UserBookManager>();
 
             services.AddAuthentication(options =>
             {

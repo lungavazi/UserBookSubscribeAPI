@@ -7,7 +7,7 @@ namespace UserBookSubscribeAPI.Controllers
 {
     [ApiController]
     [Route("usersubscribeApi/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class BookController: ControllerBase
     {
         private IUserBookManager _userBookManager;
@@ -24,9 +24,14 @@ namespace UserBookSubscribeAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(string id)
         {
-            return Ok(_userBookManager.GetBookById(id));
+            int bookId;
+            if (!int.TryParse(id, out bookId))
+            {
+                return NotFound("Book does not exist.");
+            }
+            return Ok(_userBookManager.GetBookById(bookId));
         }
 
         [HttpPost]

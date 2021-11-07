@@ -8,10 +8,10 @@ namespace UserBookSubscribeAPI.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BookId { get; set; }
+        public long BookId { get; set; }
         public string Name { get; set; }
         public string Text { get; set; }
         public double PurchasePrice { get; set; }
-        public List<Subscribe> Subscriptions {get;} = new List<Subscribe>();
+        public List<Subscribe> Subscriptions { get; } = new List<Subscribe>();
     }
 }

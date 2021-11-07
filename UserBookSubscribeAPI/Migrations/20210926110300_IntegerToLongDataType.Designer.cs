@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserBookSubscribeAPI.Context;
 
 namespace UserBookSubscribeAPI.Migrations
 {
     [DbContext(typeof(UserBookSubscribeContext))]
-    partial class UserBookSubscribeContextModelSnapshot : ModelSnapshot
+    [Migration("20210926110300_IntegerToLongDataType")]
+    partial class IntegerToLongDataType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,16 +49,20 @@ namespace UserBookSubscribeAPI.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<long>("BookId")
+                    b.Property<long>("BookID")
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("SubscribedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("UserId")
+                    b.Property<long>("UserID")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Subscribe");
                 });
@@ -85,6 +91,31 @@ namespace UserBookSubscribeAPI.Migrations
                     b.HasIndex("EmailAddress");
 
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("UserBookSubscribeAPI.Entities.Subscribe", b =>
+                {
+                    b.HasOne("UserBookSubscribeAPI.Entities.Book", null)
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("BookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UserBookSubscribeAPI.Entities.User", null)
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("UserBookSubscribeAPI.Entities.Book", b =>
+                {
+                    b.Navigation("Subscriptions");
+                });
+
+            modelBuilder.Entity("UserBookSubscribeAPI.Entities.User", b =>
+                {
+                    b.Navigation("Subscriptions");
                 });
 #pragma warning restore 612, 618
         }
