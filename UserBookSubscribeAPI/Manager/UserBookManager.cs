@@ -38,6 +38,10 @@ namespace UserBookSubscribeAPI.Manager
         public UserDTO GetUserById(long userId)
         {
             var results = _userRepository.FindByCondition(c => c.UserId == userId).FirstOrDefault();
+            if (results == null)
+            {
+                return new UserDTO();
+            }
             return _mapper.Map<UserDTO>(results);
         }
 
@@ -51,6 +55,10 @@ namespace UserBookSubscribeAPI.Manager
         public BookDTO GetBookById(long bookId)
         {
             var bookEntity = _bookRepository.FindByCondition(c => c.BookId == bookId).FirstOrDefault();
+            if (bookEntity == null)
+            {
+                return new BookDTO();
+            }
             int numberOfSubscriptions = _subscribeRepository.FindByCondition(c => c.BookId == bookId).Count();
             var bookDTO = _mapper.Map<BookDTO>(bookEntity);
             bookDTO.NumberOfSubscriptions = numberOfSubscriptions;

@@ -24,9 +24,19 @@ namespace UserBookSubscribeAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(string id)
         {
-            return Ok(_userBookManager.GetUserById(id));
+            long userId;
+            if (!long.TryParse(id, out userId))
+            {
+                return NotFound("User does not exist.");
+            }
+            var userResult = _userBookManager.GetUserById(userId);
+            if (userResult.UserId == 0)
+            {
+                return NotFound("User does not exist.");
+            }
+            return Ok(userResult);
         }
 
         [HttpPost]
